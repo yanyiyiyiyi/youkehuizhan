@@ -2,7 +2,7 @@
 	<div class="main">
 		<div class="bread-crumbs columnCenterStart">
 			<el-breadcrumb separator-class="el-icon-arrow-right">
-				<el-breadcrumb-item :to="{ path: 'userAdmin' }">店铺管理</el-breadcrumb-item>
+				<el-breadcrumb-item :to="{ path: 'shopAdmin' }">店铺管理</el-breadcrumb-item>
 			  <el-breadcrumb-item>店铺详情</el-breadcrumb-item>
 			</el-breadcrumb>
 			<div class="now-position">所在位置：店铺详情</div>

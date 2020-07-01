@@ -14,6 +14,7 @@ import './assets/style/theme/index.css';
 
 Vue.prototype.common = common;
 Vue.prototype.api = api;
+Vue.prototype.$axios = axios;
 
 Vue.use(ElementUi)
 Vue.use(VueAxios, axios)

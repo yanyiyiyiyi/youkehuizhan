@@ -36,7 +36,11 @@
 					</template>
 				</el-table-column> -->
 				<el-table-column label="联系人" prop="contacts " align="center"></el-table-column>
-				<el-table-column label="行业" prop="contacts" align="center" :show-overflow-tooltip="true"></el-table-column>
+				<el-table-column label="行业" align="center" :show-overflow-tooltip="true">
+					<template slot-scope="scope">
+						<span v-if="scope.row.industryList!=null" v-for="item in scope.row.industryList">{{item.industryName}}</span>
+					</template>
+				</el-table-column>
 				<el-table-column label="电话" prop="contactsPhone" align="center"></el-table-column>
 				<el-table-column label="店铺认证" prop="authStatus" align="center">
 					<template slot-scope="scope">

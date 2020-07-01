@@ -9,10 +9,12 @@ import shopAdminDesc from '@/components/shopAdmin/shopAdminDesc' //店铺管理-
 import shopDuesAdmin from '@/components/orderAdmin/shopDuesAdmin' //订单管理-商铺会费
 import userOrderAdmin from '@/components/orderAdmin/userOrderAdmin' //订单管理-用户订单
 import goodsAdmin from '@/components/goodsAdmin/goodsAdmin' //商品管理-商品管理
-import businessAdmin from '@/components/sortAdmin/businessAdmin' //分类管理-行业分类
+import industryAdmin from '@/components/sortAdmin/industryAdmin' //分类管理-行业分类
 import bannerAdmin from '@/components/sortAdmin/bannerAdmin' //分类管理-banner
+import bannerAdminDesc from '@/components/sortAdmin/bannerAdminDesc' //分类管理-banner-banner详情
 import attributesAdmin from '@/components/sortAdmin/attributesAdmin' //分类管理-商品属性
 import couponAdmin from '@/components/otherAdmin/couponAdmin' //其他功能-优惠券 
+import couponAdminDesc from '@/components/otherAdmin/couponAdminDesc' //其他功能-优惠券-详情
 import rightsProtection from '@/components/otherAdmin/rightsProtection' //其他功能-维权 
 import refundAdmin from '@/components/otherAdmin/refundAdmin' //其他功能-退款 
 
@@ -79,8 +81,8 @@ export default new Router({
 					title: '商品管理'
 				}
 			},{
-				path: 'businessAdmin',
-				component: businessAdmin,
+				path: 'industryAdmin',
+				component: industryAdmin,
 				meta: {
 					title: '行业分类'
 				}
@@ -89,6 +91,13 @@ export default new Router({
 				component: bannerAdmin,
 				meta: {
 					title: 'banner'
+				}
+			},{
+				path: 'bannerAdminDesc',
+				name: 'bannerAdminDesc',
+				component: bannerAdminDesc,
+				meta: {
+					title: 'banner详情'
 				}
 			},{
 				path: 'attributesAdmin',
@@ -101,6 +110,13 @@ export default new Router({
 				component: couponAdmin,
 				meta: {
 					title: '优惠券'
+				}
+			},{
+				path: 'couponAdminDesc',
+				name: 'couponAdminDesc',
+				component: couponAdminDesc,
+				meta: {
+					title: '优惠券详情'
 				}
 			},{
 				path: 'rightsProtection',

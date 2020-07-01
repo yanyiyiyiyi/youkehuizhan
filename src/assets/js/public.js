@@ -53,14 +53,14 @@ export default ({
 	      loading.close();
 	    });
 	},
-  deleteAxios: function(apiurl, callback) {
+  deleteAxios: function(apiurl, data, callback) {
     const loading = Loading.service({
       lock: true,
       text: '加载中...',
       spinner: 'el-icon-loading',
       background: 'rgba(0, 0, 0, 0.7)'
     });
-    Vue.axios.delete(apiurl).then((response) => {
+    Vue.axios.delete(apiurl, data).then((response) => {
       console.log(response.data)
       if (response.data.status) {
         callback(response)

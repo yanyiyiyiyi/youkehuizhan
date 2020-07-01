@@ -21,14 +21,14 @@ export default {
 		font-size: 62.5%;
 		background: #F0F2F5!important;
 	}
-#app {
+/* #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
+} */
 .el-main{
 	padding-top: 1.5rem;
 	padding-bottom: 1.5rem;
@@ -113,7 +113,15 @@ export default {
 	.search-input{
 		margin-right: 2rem;
 	}
-	
+	.el-date-editor .el-range__icon {
+		line-height: 2.4rem;
+	}
+	.el-date-editor .el-range-separator {
+		line-height: 2.4rem;
+	}
+	.el-date-editor .el-range__close-icon {
+		line-height: 2.4rem;
+	}
 	/* .el-select{
 		width: 100%;
 	} */

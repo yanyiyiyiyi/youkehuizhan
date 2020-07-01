@@ -91,7 +91,7 @@ export default {
           {
             "id": '5-1',
             "title": "行业分类",
-            "path": "businessAdmin",
+            "path": "industryAdmin",
           },
 					{
 					  "id": '5-2',

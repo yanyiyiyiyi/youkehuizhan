@@ -5,6 +5,12 @@
 ## Build Setup
 
 ``` bash
+# 依赖安装
+ElementUi、axios、VueAxios
+npm i element-ui -S
+npm install axios --save
+npm install --save axios vue-axios
+
 # install dependencies
 npm install
 
