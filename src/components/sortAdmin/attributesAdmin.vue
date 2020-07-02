@@ -87,7 +87,7 @@
 				},
 				dialogFormRules: {
 					attributeName: [
-						{ required: true, message: '请输入用户名', trigger: 'blur' },
+						{ required: true, message: '请输入属性名称', trigger: 'blur' },
 					],
 				},
 				formLabelWidth: '80px',

@@ -5,7 +5,10 @@
 				<p class="login-form-title">优客会展后台管理平台</p>
 				<el-input class='login-input' prefix-icon="el-icon-user" placeholder="用户名"></el-input>
 				<el-input class='login-input' prefix-icon="el-icon-key" placeholder="密码"></el-input>
-				<el-button type="primary" class="login-btn" size="medium" @click="goIndex">登录</el-button>
+				
+				<div class="rowCenterCenter">
+					<el-button type="primary" class="login-btn" size="medium" @click="goIndex">登录</el-button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -63,10 +66,10 @@ export default {
 		border-left-width: 0;
 	}
 	.login-input{
-		margin-top: 2rem;
+		margin-top: 3rem;
 		width: 100%;
 	}
 	.login-btn{
-		margin-top: 5rem;
+		margin-top: 7.5rem;
 	}
 </style>

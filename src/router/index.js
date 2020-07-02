@@ -17,6 +17,12 @@ import couponAdmin from '@/components/otherAdmin/couponAdmin' //其他功能-优
 import couponAdminDesc from '@/components/otherAdmin/couponAdminDesc' //其他功能-优惠券-详情
 import rightsProtection from '@/components/otherAdmin/rightsProtection' //其他功能-维权 
 import refundAdmin from '@/components/otherAdmin/refundAdmin' //其他功能-退款 
+import scoreAdmin from '@/components/otherAdmin/scoreAdmin' //其他功能-退款 
+import agreementAdmin from '@/components/otherAdmin/agreementAdmin' //其他功能-退款 
+import authorityAdmin from '@/components/authorityAdmin/authorityAdmin' //权限管理-权限管理
+import roleAdmin from '@/components/authorityAdmin/roleAdmin' //权限管理-角色管理
+import logAdmin from '@/components/authorityAdmin/logAdmin' //权限管理-日志管理
+import backgroundUserAdmin from '@/components/authorityAdmin/backgroundUserAdmin' //权限管理-后台用户
 
 
 Vue.use(Router)
@@ -129,6 +135,42 @@ export default new Router({
 				component: refundAdmin,
 				meta: {
 					title: '退款'
+				}
+			},{
+				path: 'agreementAdmin',
+				component: agreementAdmin,
+				meta: {
+					title: '协议'
+				}
+			},{
+				path: 'scoreAdmin',
+				component: scoreAdmin,
+				meta: {
+					title: '评分管理'
+				}
+			},{
+				path: 'authorityAdmin',
+				component: authorityAdmin,
+				meta: {
+					title: '权限管理'
+				}
+			},{
+				path: 'roleAdmin',
+				component: roleAdmin,
+				meta: {
+					title: '角色管理'
+				}
+			},{
+				path: 'logAdmin',
+				component: logAdmin,
+				meta: {
+					title: '日志管理'
+				}
+			},{
+				path: 'backgroundUserAdmin',
+				component: backgroundUserAdmin,
+				meta: {
+					title: '后台用户'
 				}
 			}]
 		},

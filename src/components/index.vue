@@ -120,9 +120,35 @@ export default {
 					  "path": "rightsProtection",
 					},
 					{
-					  "id": '6-3',
-					  "title": "退款",
-					  "path": "refundAdmin",
+					  "id": '6-4',
+					  "title": "协议",
+					  "path": "agreementAdmin",
+					},
+					{
+					  "id": '6-5',
+					  "title": "评分管理",
+					  "path": "scoreAdmin",
+					}
+        ]
+      },{
+        "id": '7',
+        "title": "权限管理",
+        "icon": "el-icon-setting",
+        "childList": [
+					{
+					  "id": '7-2',
+					  "title": "角色管理",
+					  "path": "roleAdmin",
+					},
+					{
+					  "id": '7-3',
+					  "title": "后台用户",
+					  "path": "backgroundUserAdmin",
+					},
+					{
+					  "id": '7-4',
+					  "title": "日志管理",
+					  "path": "logAdmin",
 					}
         ]
       }]

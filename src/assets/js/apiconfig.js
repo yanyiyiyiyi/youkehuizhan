@@ -2,6 +2,8 @@
 var root = process.env.API_ROOT
 
 export default({
+	// 上传文件
+	uplodFiles: root + 'upload/uplodFiles',
 	// 获取用户列表
 	listUser: root + 'user/listUser',
 	// 根据id获取用户详情
@@ -32,8 +34,6 @@ export default({
 	deleteBannerById: root + 'banner/deleteBannerById',
 	// 新增banner
 	insertBanner: root + 'banner/insertBanner',
-	// 上传文件
-	uplodFiles: root + 'upload/uplodFiles',
 	// 查询属性list
 	getAttribute: root + 'category/getAttribute',
 	// 新增属性
@@ -51,4 +51,34 @@ export default({
 	updateConponById: root +  'updateConponById',
 	// 查看优惠券用id
 	selectCouponById: root + 'selectCouponById',
+	// 查询维权list
+	listMaintain: root + 'maintain/listMaintain',
+	// 维权处理
+	maintainHandle: root + 'maintain/maintainHandle',
+	// 评分查询list
+	listScore: root + 'score/listScore',
+	// 新增评分
+	insertScore: root + 'score/insertScore',
+	// 修改评分
+	updateScoreById: root + 'score/updateScoreById',
+	// 删除评分
+	deleteScoreById: root + 'score/deleteScoreById',
+	// 协议查询list
+	listAgreement: root + 'agreement/listAgreement',
+	// 新增协议
+	insertAgreement: root + 'agreement/insertAgreement',
+	// 修改协议
+	updateAgreementById: root + 'agreement/updateAgreementById',
+	// 删除协议
+	deleteAgreementById: root + 'agreement/deleteAgreementById',
+	// 后台用户查询list
+	listBackGroudUserPaging: root + 'backgroud/user/listBackGroudUserPaging',
+	// 角色查询list
+	listRole: root + 'backgroud/role/listRole',
+	// 新增角色
+	insertRole: root + 'backgroud/role/insertRole',
+	// 修改角色
+	updateRole: root + 'backgroud/role/updateRole',
+	// 删除角色
+	deleteRole: root + 'backgroud/role/deleteRole',
 })

@@ -2,20 +2,16 @@
 	<div class="main">
 		<div class="bread-crumbs columnCenterStart">
 			<el-breadcrumb separator-class="el-icon-arrow-right">
-			  <el-breadcrumb-item>订单管理/商铺会费</el-breadcrumb-item>
+			  <el-breadcrumb-item>用户管理</el-breadcrumb-item>
 			</el-breadcrumb>
-			<div class="now-position">所在位置：商铺会费</div>
+			<div class="now-position">所在位置：用户管理</div>
 		</div>
 		<div class="table-area">
 			<div class="search-area rowBetweenCenter">
 				<div class="rowStartCenter search-input-area">
-					<span class="input-tip">订单编号：</span>
+					<span class="input-tip">用户昵称：</span>
 					<el-input v-model="searchForm.nickName" clearable class="search-input"></el-input>
-					<span class="input-tip">联系人：</span>
-					<el-input v-model="searchForm.phone" clearable class="search-input"></el-input>
-					<span class="input-tip">交易号：</span>
-					<el-input v-model="searchForm.phone" clearable class="search-input"></el-input>
-					<span class="input-tip">电话：</span>
+					<span class="input-tip">用户手机号：</span>
 					<el-input v-model="searchForm.phone" clearable class="search-input"></el-input>
 				</div>
 				<div class="btn-area">
@@ -29,36 +25,27 @@
 			 :header-cell-style="{background:'#F5F6FA',color:'#000',fontWeight:'bold'}">
 				<el-table-column type="index" :index="indexMethod" label="序号" width="100" align="center">
 				</el-table-column>
-				<el-table-column label="订单编号" prop="shopsFeeNo" align="center" :show-overflow-tooltip="true"></el-table-column>
-				<el-table-column label="行业" align="center" :show-overflow-tooltip="true">
+				<el-table-column label="用户昵称" prop="nickName" align="center"></el-table-column>
+				<el-table-column label="用户名" prop="backgroudUserName" align="center"></el-table-column>
+				<el-table-column label="用户手机号" prop="phone" align="center"></el-table-column>
+				<el-table-column label="角色" prop="role" align="center"></el-table-column>
+				<el-table-column label="角色描述" prop="roleDescribes" align="center"></el-table-column>
+				<el-table-column label="创建时间" prop="createTime" align="center"></el-table-column>
+				<!-- <el-table-column label="操作" align="center">
 					<template slot-scope="scope">
-						<span v-if="scope.row.shopsRelIndustryList!=null" v-for="item in scope.row.shopsRelIndustryList">{{item.industryName}}</span>
+						<el-button
+							type="text"
+							size="mini">
+							<span @click="viewTable(scope.$index, scope.row)" class="text-black">详情</span>
+						</el-button>
+						<el-button
+							 v-if="scope.row.backUserSign!='1'"
+							type="text"
+							size="mini">
+							<span @click="setTable(scope.$index, scope.row)" class="text-red">设为后台用户</span>
+							</el-button>
 					</template>
-				</el-table-column>
-				<el-table-column label="公司名" align="center" :show-overflow-tooltip="true">
-					<template slot-scope="scope">
-						<span v-if="scope.row.shops!=null">{{scope.row.shops.company}}</span>
-					</template>
-				</el-table-column>
-				<el-table-column label="手机号" align="center" :show-overflow-tooltip="true">
-					<template slot-scope="scope">
-						<span v-if="scope.row.shops!=null">{{scope.row.shops.contactsPhone}}</span>
-					</template>
-				</el-table-column>
-				<el-table-column label="联系人" align="center">
-					<template slot-scope="scope">
-						<span v-if="scope.row.shops!=null">{{scope.row.shops.contacts}}</span>
-					</template>
-				</el-table-column>
-				<el-table-column label="金额" prop="totalPrice" align="center"></el-table-column>
-				<el-table-column label="订单创建时间" prop="createTime " align="center" :show-overflow-tooltip="true"></el-table-column>
-				<el-table-column label="支付时间" prop="updateTime" align="center"></el-table-column>
-				<el-table-column label="支付状态" prop="feePayStatus " align="center">
-					<template slot-scope="scope">
-						<span v-if="scope.row.feePayStatus  == 0">未支付</span>
-						<span v-else-if="scope.row.feePayStatus  == 1">已支付</span>
-					</template>
-				</el-table-column>
+				</el-table-column> -->
 			</el-table>
 			<div class="block rowEndCenter">
 			  <el-pagination
@@ -116,7 +103,7 @@
 			},
 			// 获取table信息
 			getTable() {
-				let apiurl = this.api.listShopsFeeOrderpangingByShopsId + '?page=' + this.page + '&length=' + this.length;
+				let apiurl = this.api.listBackGroudUserPaging + '/' + this.page + '/' + this.length;
 				// if(this.searchForm.nickName != '') {
 				// 	apiurl += '&nickName=' + this.searchForm.nickName;
 				// }
@@ -133,11 +120,6 @@
 			handleCurrentChange(val) {
 				this.page = val;
 				this.getTable();
-			},
-			// 查看table详情
-			viewTable(index, row) {
-				console.log(index, row);
-				this.$router.push({path: 'shopAdminDesc', query: {shopId: row.id,userId: row.userId}})
 			},
 			
 		}

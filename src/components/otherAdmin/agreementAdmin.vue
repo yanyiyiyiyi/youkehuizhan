@@ -2,21 +2,21 @@
 	<div class="main">
 		<div class="bread-crumbs columnCenterStart">
 			<el-breadcrumb separator-class="el-icon-arrow-right">
-			  <el-breadcrumb-item>分类管理/行业分类</el-breadcrumb-item>
+			  <el-breadcrumb-item>其他功能/协议</el-breadcrumb-item>
 			</el-breadcrumb>
-			<div class="now-position">所在位置：行业分类</div>
+			<div class="now-position">所在位置：协议</div>
 		</div>
 		<div class="table-area">
-			<div class="search-area rowBetweenCenter">
-				<div class="rowStartCenter search-input-area">
+			<div class="search-area rowEndCenter">
+				<!-- <div class="rowStartCenter search-input-area">
 					<span class="input-tip">行业名称：</span>
 					<el-input v-model="searchForm.nickName" clearable class="search-input"></el-input>
 					<span class="input-tip">收费价格：</span>
 					<el-input v-model="searchForm.phone" clearable class="search-input"></el-input>
-				</div>
+				</div> -->
 				<div class="btn-area rowBetweenCenter">
 					<el-button type="primary" @click="addTable">新增</el-button>
-					<el-button type="primary" @click="getTable" plain>搜索</el-button>
+					<!-- <el-button type="primary" @click="getTable" plain>搜索</el-button> -->
 				</div>
 			</div>
 			<el-table 
@@ -26,10 +26,14 @@
 			 :header-cell-style="{background:'#F5F6FA',color:'#000',fontWeight:'bold'}">
 				<el-table-column type="index" :index="indexMethod" label="序号" width="100" align="center">
 				</el-table-column>
-				<el-table-column label="行业名称" prop="industryName" align="center"></el-table-column>
-				<el-table-column label="收费价格" prop="price" align="center"></el-table-column>
+				<el-table-column label="协议描述" prop="content" align="center"></el-table-column>
+				<el-table-column label="协议类型" prop="type" align="center">
+					<template slot-scope="scope">
+						<span v-if="scope.row.type == '0'">用户协议</span>
+						<span v-else-if="scope.row.type == '1'">商铺协议</span>
+					</template>
+				</el-table-column>
 				
-				<el-table-column label="创建时间" prop="createTime" align="center"></el-table-column>
 				<el-table-column label="操作" align="center">
 					<template slot-scope="scope">
 						<el-button
@@ -51,11 +55,14 @@
 		<!-- 新增行业分类弹窗 -->
 		<el-dialog title="行业分类" :visible.sync="dialogFormVisible" :before-close="clearForm">
 			<el-form :model="dialogForm" :rules="dialogFormRules" ref="dialogForm" class="dialogForm user-dialog">
-				<el-form-item label="行业名称:" :label-width="formLabelWidth" prop="industryName">
-					<el-input v-model="dialogForm.industryName" autocomplete="off"></el-input>
+				<el-form-item label="协议描述:" :label-width="formLabelWidth" prop="content">
+					<el-input type="textarea" v-model="dialogForm.content" autocomplete="off"></el-input>
 				</el-form-item>
-				<el-form-item label="收费价格:" :label-width="formLabelWidth" prop="price">
-					<el-input v-model="dialogForm.price" autocomplete="off" type="number"></el-input>
+				<el-form-item label="协议类型:" :label-width="formLabelWidth" prop="type">
+					<el-select v-model="dialogForm.type" placeholder="请选择协议类型">
+						<el-option label="用户协议" value="0"></el-option>
+						<el-option label="商铺协议" value="1"></el-option>
+					</el-select>
 				</el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
@@ -81,15 +88,15 @@
 				},
 				// 弹窗中表单
 				dialogForm: {
-					industryName: '',
-					price: ''
+					content: '',
+					type: ''
 				},
 				dialogFormRules: {
-					industryName: [
-						{ required: true, message: '请输入行业名称', trigger: 'blur' },
+					content: [
+						{ required: true, message: '请输入协议内容', trigger: 'blur' },
 					],
-					price: [
-						{ required: true, message: '请输入收费价格', trigger: 'blur' },
+					type: [
+						{ required: true, message: '请选择协议类型', trigger: 'change' },
 					],
 				},
 				formLabelWidth: '80px',
@@ -112,7 +119,7 @@
 			},
 			// 获取table信息
 			getTable() {
-				let apiurl = this.api.listIndustry;
+				let apiurl = this.api.listAgreement;
 				// if(this.searchForm.nickName != '') {
 				// 	apiurl += '&nickName=' + this.searchForm.nickName;
 				// }
@@ -157,17 +164,17 @@
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
 						if(_this.dialogType == 1) {
-							let apiurl = _this.api.insertIndustry;
+							let apiurl = _this.api.insertAgreement;
 							let industry = {
-								industryName: _this.dialogForm.industryName,
-								price: _this.dialogForm.price,
+								content: _this.dialogForm.content,
+								type: _this.dialogForm.type,
 							};
 							_this.common.postAxios(apiurl, industry, _this.returnSave)
 						} else {
-							let apiurl = _this.api.updateIndustryById;
+							let apiurl = _this.api.updateAgreementById;
 							let industry = {
-								industryName: _this.dialogForm.industryName,
-								price: _this.dialogForm.price,
+								content: _this.dialogForm.content,
+								type: _this.dialogForm.type,
 								id: _this.dialogForm.id
 							};
 							_this.common.putAxios(apiurl, industry, _this.returnUpdate)
@@ -192,8 +199,8 @@
 					_this.$message.error(res.data.msg);
 					// _this.dialogFormVisible = false;
 					_this.dialogForm = {
-						industryName: '',
-						price: ''
+						content: '',
+						type: ''
 					}
 				}
 			},
@@ -212,8 +219,8 @@
 					_this.$message.error(res.data.msg);
 					// _this.dialogFormVisible = false;
 					_this.dialogForm = {
-						industryName: '',
-						price: ''
+						content: '',
+						type: ''
 					}
 				}
 			},
@@ -225,11 +232,11 @@
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
-					let apiurl = _this.api.deleteIndustryById;
-					let industry = {
+					let apiurl = _this.api.deleteAgreementById;
+					let agreement = {
 						id: row.id
 					};
-					_this.common.deleteAxios(apiurl, {data: industry}, _this.returnDel)
+					_this.common.deleteAxios(apiurl, {data: agreement}, _this.returnDel)
 				}).catch(() => {
 					_this.$message({
 						type: 'info',
