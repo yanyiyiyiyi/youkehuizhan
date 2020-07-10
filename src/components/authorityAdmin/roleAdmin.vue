@@ -8,12 +8,12 @@
 		</div>
 		<div class="table-area">
 			<div class="search-area rowEndCenter">
-				<!-- <div class="rowStartCenter search-input-area">
-					<span class="input-tip">行业名称：</span>
+				<div class="rowStartCenter search-input-area">
+					<!-- <span class="input-tip">行业名称：</span>
 					<el-input v-model="searchForm.nickName" clearable class="search-input"></el-input>
 					<span class="input-tip">收费价格：</span>
-					<el-input v-model="searchForm.phone" clearable class="search-input"></el-input>
-				</div> -->
+					<el-input v-model="searchForm.phone" clearable class="search-input"></el-input> -->
+				</div>
 				<div class="btn-area rowBetweenCenter">
 					<el-button type="primary" @click="addTable">新增</el-button>
 					<!-- <el-button type="primary" @click="getTable" plain>搜索</el-button> -->
@@ -32,6 +32,11 @@
 				
 				<el-table-column label="操作" align="center">
 					<template slot-scope="scope">
+						<el-button
+							type="text"
+							size="mini">
+							<span @click="adminTable(scope.$index, scope.row)" class="text-red">权限管理</span>
+						</el-button>
 						<el-button
 							type="text"
 							size="mini">
@@ -61,6 +66,18 @@
 			<div slot="footer" class="dialog-footer">
 				<el-button @click="clearForm">取 消</el-button>
 				<el-button type="primary" @click="saveSet('dialogForm')">确 定</el-button>
+			</div>
+		</el-dialog>
+		<!-- 权限管理弹窗 -->
+		<el-dialog title="权限分配" :visible.sync="dialogFormAdmin">
+			<el-transfer 
+			 v-model="menuRelRoleList" 
+			 :data="menuList"
+			 :props="{key: 'id',label: 'title'}"
+       :titles="['可选权限', '已选权限']"></el-transfer>
+			<div slot="footer" class="dialog-footer">
+				<el-button @click="dialogFormAdmin = false">取 消</el-button>
+				<el-button type="primary" @click="saveAdmin">确 定</el-button>
 			</div>
 		</el-dialog>
 	</div>
@@ -95,10 +112,16 @@
 				formLabelWidth: '80px',
 				dialogFormVisible: false, //false
 				dialogType: 1, //1新增2编辑
+				dialogFormAdmin: false, //false 权限弹窗
+				originalMenuRelRoleList: [], //该用户原有权限，用来判断添加or删除
+				menuRelRoleList: [], //已选中的权限
+				menuList: [],//所有权限
+				buserRoleId: ''//角色id
 			}
 		},
 		mounted() {
 			this.initTable();
+			this.getMenuList();
 		},
 		methods: {
 			// 序号设置
@@ -139,6 +162,131 @@
 			addTable() {
 				this.dialogType = 1;
 				this.dialogFormVisible = true;
+			},
+			// 获取权限即菜单列表
+			getMenuList() {
+				let apiurl = (`${this.api.listMenuByRoleId}/1`);
+				this.common.getAxios(apiurl, this.returnMenuList);
+			},
+			returnMenuList(res) {
+				if(res.data.status) {
+					let menu = res.data.data.menu;
+					let menuList = [];
+					for(var i in menu) {
+						if(menu[i].childList != null) {
+							for(var j in menu[i].childList) {
+								var obj = {
+									id: menu[i].childList[j].id,
+									title: menu[i].childList[j].title,
+								}
+								menuList.push(obj);
+								console.log(menuList)
+							}
+						} else {
+							var obj = {
+								id: menu[i].id,
+								title: menu[i].title
+							}
+							menuList.push(obj);
+						}
+					}
+					this.menuList = menuList;
+				}
+			},
+			// 权限管理弹窗
+			adminTable(index, row) {
+				this.buserRoleId = row.id;
+				this.getRoleMenu();
+				this.dialogFormAdmin = true;
+			},
+			// 获取该角色现有权限
+			getRoleMenu() {
+				let _this = this;
+				let apiurl = (`${this.api.listUserMenuByRoleId}/${this.buserRoleId}`);
+				this.common.getAxios(apiurl, returnRoleMenu);
+				function returnRoleMenu(res) {
+					if(res.data.status) {
+						let data = res.data.data;
+						let list = data.map(item => {
+							return item.bmenuId
+						})
+						_this.menuRelRoleList = list;
+						_this.originalMenuRelRoleList = list;
+					} else {
+						_this.$message.error(res.data.msg);
+					}
+				}
+			},
+			// 保存权限设置
+			saveAdmin() {
+				// console.log(this.menuRelRoleList);
+				let originalMenuRelRoleList = this.originalMenuRelRoleList;//原有权限
+				let menuRelRoleList = this.menuRelRoleList;//现在选中
+				console.log(originalMenuRelRoleList, 'originalMenuRelRoleList')
+				console.log(menuRelRoleList, 'menuRelRoleList')
+				// 处理新增的  现在>原有
+				let newMenuRelRoleList = [];
+				menuRelRoleList.forEach(item => {
+					if(originalMenuRelRoleList.indexOf(item) == -1) {
+						newMenuRelRoleList.push(item)
+					}
+				})
+				let list = newMenuRelRoleList.map(item => {
+					return {bmenuId: item, buserRoleId: this.buserRoleId}
+				});
+				console.log('新增',list)
+				let apiurl = this.api.insertRoleRelMenu;
+				let menuRelRole = {
+					list: list
+				}
+				if(list.length != 0) {
+					this.common.postAxios(apiurl, menuRelRole, this.returnSaveAdmin);
+				}
+				// 处理删除的 原有>现在
+				let delMenuRelRoleList = [];
+				const a = [1,2,3,4,5], b = [1,2],c = [];
+				    a.forEach( v => {
+				      if(b.indexOf(v) === -1) c.push(v)
+				    })
+				originalMenuRelRoleList.forEach(item => {
+					if(menuRelRoleList.indexOf(item) == -1) {
+						delMenuRelRoleList.push(item)
+					}
+				});
+				let delList = delMenuRelRoleList.map(item => {
+					return {bmenuId: item, buserRoleId: this.buserRoleId}
+				});
+				console.log('删除',delList)
+				let apiurlDel = this.api.deleteRoleRelMenu;
+				let menuRelRoleDel = {
+					list: delList
+				}
+				if(delList.length != 0) {
+					this.common.deleteAxios(apiurlDel, {data: menuRelRoleDel}, this.returnSaveAdminDel);
+				}
+			},
+			returnSaveAdmin(res) {
+				// console.log(res)
+				if(res.data.status) {
+					this.$message({
+						type: 'success',
+						message: '新增成功'
+					})
+					this.dialogFormAdmin = false;
+				} else {
+					this.$message.error(res.data.msg);
+				}
+			},
+			returnSaveAdminDel(res) {
+				if(res.data.status) {
+					this.$message({
+						type: 'success',
+						message: '删除成功'
+					})
+					this.dialogFormAdmin = false;
+				} else {
+					this.$message.error(res.data.msg);
+				}
 			},
 			// 设为后台用户弹窗
 			setTable(index, row) {

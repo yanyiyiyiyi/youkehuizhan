@@ -9,12 +9,12 @@
 		<div class="table-area">
 			<div class="search-area rowBetweenCenter">
 				<div class="rowStartCenter search-input-area">
-					<span class="input-tip">创建时间：</span>
-					<el-input v-model="searchForm.nickName" clearable class="search-input"></el-input>
+					<!-- <span class="input-tip">创建时间：</span>
+					<el-input v-model="searchForm.nickName" clearable class="search-input"></el-input> -->
 				</div>
 				<div class="btn-area rowBetweenCenter">
 					<el-button type="primary" @click="addTable">新增</el-button>
-					<el-button type="primary" @click="getTable" plain>搜索</el-button>
+					<!-- <el-button type="primary" @click="getTable" plain>搜索</el-button> -->
 				</div>
 			</div>
 			<el-table 
@@ -69,7 +69,7 @@
 			}
 		},
 		mounted() {
-			this.initTable();
+			this.getTable();
 		},
 		methods: {
 			// 序号设置
@@ -132,7 +132,7 @@
 						type: 'success',
 						message: '删除成功'
 					});
-					this.initTable();
+					this.getTable();
 				} else {
 					this.$message.error(res.data.msg);
 				}

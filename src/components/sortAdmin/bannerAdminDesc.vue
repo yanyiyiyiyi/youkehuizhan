@@ -17,11 +17,11 @@
 				<el-form-item label="banner:" :label-width="formLabelWidth">
 					<el-upload
 					  class="avatar-uploader"
-					  :action="uploadApi"
+					  :action="uploadApiurl"
 					  :show-file-list="false"
 					  :on-success="handleAvatarSuccess">
-					  <img v-if="dialogForm.url&&dialogForm.type == '1'" :src="dialogForm.url" class="avatar">
-						<video v-if="dialogForm.url&&dialogForm.type == '2'" :src="dialogForm.url" class="avatar" autoplay controls ></video>
+					  <img v-if="dialogForm.url&&dialogForm.type == '0'" :src="dialogForm.url" class="avatar">
+						<video v-if="dialogForm.url&&dialogForm.type == '1'" :src="dialogForm.url" class="avatar" autoplay controls ></video>
 					  <i v-if="dialogForm.url == ''" class="el-icon-plus avatar-uploader-icon"></i>
 						<!-- 上传图片或视频 -->
 					</el-upload>
@@ -42,7 +42,7 @@
 		data() {
 			return {
 				descType: this.$route.params.descType,
-				uploadApi: this.api.uplodFiles,
+				uploadApiurl: this.api.uplodFiles,
 				imageUrl: '',
 				// 弹窗中表单
 				dialogForm: {

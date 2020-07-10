@@ -12,17 +12,17 @@
 					active-text-color="#F44A00"
 					:unique-opened="true">
 					<template v-for="list in menuList">
-						<el-submenu :index="list.id" v-if="list.childList != null">
+						<el-submenu :index="list.index" v-if="list.childList != null">
 							<template slot="title">
 								<i :class="list.icon"></i>
 								<span>{{list.title}}</span>
 							</template>
 							<el-menu-item-group>
-								<el-menu-item :index="item.id" v-for="item in list.childList" @click="goPath(item.path)">{{item.title}}</el-menu-item>
+								<el-menu-item :index="item.index" v-for="item in list.childList" @click="goPath(item.path)">{{item.title}}</el-menu-item>
 								
 							</el-menu-item-group>
 						</el-submenu>
-						<el-menu-item :index="list.id" v-else @click="goPath(list.path)">
+						<el-menu-item :index="list.index" v-else @click="goPath(list.path)">
 							<i :class="list.icon"></i>
 							<span slot="title">{{list.title}}</span>
 						</el-menu-item>
@@ -48,113 +48,25 @@ export default {
   name: 'index',
   data () {
     return {
-      menuList:  [
-      {
-        "id": '1',
-        "title": "用户管理",
-      	"path": "userAdmin",
-        "icon": "el-icon-user",
-        "childList": null
-      },{
-        "id": '2',
-        "title": "店铺管理",
-				"path": "shopAdmin",
-        "icon": "el-icon-present",
-        "childList": null
-      },{
-        "id": '3',
-        "title": "订单管理",
-        "icon": "el-icon-coin",
-        "childList": [
-          {
-            "id": '3-1',
-            "title": "商铺会费",
-            "path": "shopDuesAdmin",
-          },
-					{
-					  "id": '3-2',
-					  "title": "用户订单",
-					  "path": "userOrderAdmin",
-					}
-        ]
-      },{
-        "id": '4',
-        "title": "商品管理",
-        "icon": "el-icon-goods",
-				"path": "goodsAdmin",
-        "childList": null,
-      },{
-        "id": '5',
-        "title": "分类管理",
-        "icon": "el-icon-coin",
-        "childList": [
-          {
-            "id": '5-1',
-            "title": "行业分类",
-            "path": "industryAdmin",
-          },
-					{
-					  "id": '5-2',
-					  "title": "banner",
-					  "path": "bannerAdmin",
-					},
-					{
-					  "id": '5-3',
-					  "title": "商品属性",
-					  "path": "attributesAdmin",
-					}
-        ]
-      },{
-        "id": '6',
-        "title": "其他功能",
-        "icon": "el-icon-coin",
-        "childList": [
-          {
-            "id": '6-1',
-            "title": "优惠券",
-            "path": "couponAdmin",
-          },
-					{
-					  "id": '6-2',
-					  "title": "维权",
-					  "path": "rightsProtection",
-					},
-					{
-					  "id": '6-4',
-					  "title": "协议",
-					  "path": "agreementAdmin",
-					},
-					{
-					  "id": '6-5',
-					  "title": "评分管理",
-					  "path": "scoreAdmin",
-					}
-        ]
-      },{
-        "id": '7',
-        "title": "权限管理",
-        "icon": "el-icon-setting",
-        "childList": [
-					{
-					  "id": '7-2',
-					  "title": "角色管理",
-					  "path": "roleAdmin",
-					},
-					{
-					  "id": '7-3',
-					  "title": "后台用户",
-					  "path": "backgroundUserAdmin",
-					},
-					{
-					  "id": '7-4',
-					  "title": "日志管理",
-					  "path": "logAdmin",
-					}
-        ]
-      }]
+      menuList:  []
     }
   },
+	created() {
+		this.getMenuList();
+	},
 	methods: {
+		// 获取菜单列表
+		getMenuList() {
+			let apiurl = this.api.listMenuByRoleId+'/1';
+			this.common.getAxios(apiurl, this.returnMenuList);
+		},
+		returnMenuList(res) {
+			if(res.data.status) {
+				this.menuList = res.data.data.menu;
+			} else {
+				this.$message.error(res.data.msg);
+			}
+		},
 		goPath(path) {
 			this.$router.push(path)
 		}

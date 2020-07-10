@@ -8,7 +8,7 @@
 		</div>
 		<div class="table-area">
 			<div class="search-area rowBetweenCenter">
-				<div class="rowStartCenter search-input-area">
+				<!-- <div class="rowStartCenter search-input-area">
 					<span class="input-tip">订单编号：</span>
 					<el-input v-model="searchForm.nickName" clearable class="search-input"></el-input>
 					<span class="input-tip">联系人：</span>
@@ -20,7 +20,7 @@
 				</div>
 				<div class="btn-area">
 					<el-button type="primary" @click="getTable">搜索</el-button>
-				</div>
+				</div> -->
 			</div>
 			<el-table 
 			 :data="tableData" 

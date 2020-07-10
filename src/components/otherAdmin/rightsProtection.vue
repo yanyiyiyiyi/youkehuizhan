@@ -2,13 +2,13 @@
 	<div class="main">
 		<div class="bread-crumbs columnCenterStart">
 			<el-breadcrumb separator-class="el-icon-arrow-right">
-			  <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+			  <el-breadcrumb-item>维权</el-breadcrumb-item>
 			</el-breadcrumb>
-			<div class="now-position">所在位置：用户管理</div>
+			<div class="now-position">所在位置：维权</div>
 		</div>
 		<div class="table-area">
 			<div class="search-area rowBetweenCenter">
-				<div class="rowStartCenter search-input-area">
+				<!-- <div class="rowStartCenter search-input-area">
 					<span class="input-tip">订单编号：</span>
 					<el-input v-model="searchForm.nickName" clearable class="search-input"></el-input>
 					<span class="input-tip">发起人昵称：</span>
@@ -16,7 +16,7 @@
 				</div>
 				<div class="btn-area">
 					<el-button type="primary" @click="getTable">搜索</el-button>
-				</div>
+				</div> -->
 			</div>
 			<el-table 
 			 :data="tableData" 

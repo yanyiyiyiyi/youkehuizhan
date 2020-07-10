@@ -81,4 +81,22 @@ export default({
 	updateRole: root + 'backgroud/role/updateRole',
 	// 删除角色
 	deleteRole: root + 'backgroud/role/deleteRole',
+	// 菜单列表查询 1
+	listMenuByRoleId: root + 'background/menu/listMenuByRoleId',
+	// 新增角色和菜单列表关联
+	insertRoleRelMenu: root + 'background/menu/insertRoleRelMenu',
+	// 删除角色和菜单的关联
+	deleteRoleRelMenu: root + 'background/menu/deleteRoleRelMenu',
+	// 通过角色id查询当角色有那些菜单权限
+	listUserMenuByRoleId: root + 'background/menu/listUserMenuByRoleId',
+	// 查询日志list
+	listLogsPaging: root + 'logs/listLogsPaging',
+	// 查询商品list
+	listBackProductsPagingById: root + 'products/listBackProductsPagingById',
+	// 查询商品详情
+	getBackProductsById: root + 'products/getBackProductsById',
+	// 新增商品
+	insertProducts: root + 'products/insertProducts',
+	// 新增库存
+	insertProductsStocks: root + 'products/insertProductsStocks',
 })

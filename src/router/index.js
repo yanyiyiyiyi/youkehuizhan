@@ -9,6 +9,7 @@ import shopAdminDesc from '@/components/shopAdmin/shopAdminDesc' //店铺管理-
 import shopDuesAdmin from '@/components/orderAdmin/shopDuesAdmin' //订单管理-商铺会费
 import userOrderAdmin from '@/components/orderAdmin/userOrderAdmin' //订单管理-用户订单
 import goodsAdmin from '@/components/goodsAdmin/goodsAdmin' //商品管理-商品管理
+import goodsAdminDesc from '@/components/goodsAdmin/goodsAdminDesc' //商品管理-商品管理详情
 import industryAdmin from '@/components/sortAdmin/industryAdmin' //分类管理-行业分类
 import bannerAdmin from '@/components/sortAdmin/bannerAdmin' //分类管理-banner
 import bannerAdminDesc from '@/components/sortAdmin/bannerAdminDesc' //分类管理-banner-banner详情
@@ -83,8 +84,16 @@ export default new Router({
 			},{
 				path: 'goodsAdmin',
 				component: goodsAdmin,
+				name: 'goodsAdmin',
 				meta: {
 					title: '商品管理'
+				}
+			},{
+				path: 'goodsAdminDesc',
+				component: goodsAdminDesc,
+				name: 'goodsAdminDesc',
+				meta: {
+					title: '商品详情'
 				}
 			},{
 				path: 'industryAdmin',

@@ -9,14 +9,14 @@
 		<div class="table-area">
 			<div class="search-area rowBetweenCenter">
 				<div class="rowStartCenter search-input-area">
-					<span class="input-tip">行业名称：</span>
+					<!-- <span class="input-tip">行业名称：</span>
 					<el-input v-model="searchForm.nickName" clearable class="search-input"></el-input>
 					<span class="input-tip">收费价格：</span>
-					<el-input v-model="searchForm.phone" clearable class="search-input"></el-input>
+					<el-input v-model="searchForm.phone" clearable class="search-input"></el-input> -->
 				</div>
 				<div class="btn-area rowBetweenCenter">
 					<el-button type="primary" @click="addTable">新增</el-button>
-					<el-button type="primary" @click="getTable" plain>搜索</el-button>
+					<!-- <el-button type="primary" @click="getTable" plain>搜索</el-button> -->
 				</div>
 			</div>
 			<el-table 
