@@ -66,6 +66,7 @@ export default {
 			if(localStorage.getItem("userDetail")){
 				var userDetail=JSON.parse(localStorage.getItem("userDetail"));
 				this.$store.commit("setUserDetail",userDetail);
+				console.log(this.$store.state)
 				this.getMenuList();
 			}else{
 				this.$router.push("/")

@@ -104,7 +104,7 @@
 				descType: '',
 				goodsDescForm: {
 					productsNo:"",
-					shopsId:this.$store.state.userDetail.shops,
+					shopsId:this.$store.state.userDetail.shops.id,
 					productsName:"",
 					introduction:"",
 					// majorPicture:"",
