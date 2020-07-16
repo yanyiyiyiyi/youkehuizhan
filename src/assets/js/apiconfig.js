@@ -2,6 +2,10 @@
 var root = process.env.API_ROOT
 
 export default({
+	// 用户登录
+	login: root + 'background/login',
+	// 退出登录
+	logout: root + 'background/logout',
 	// 上传文件
 	uplodFiles: root + 'upload/uplodFiles',
 	// 获取用户列表
@@ -97,6 +101,16 @@ export default({
 	getBackProductsById: root + 'products/getBackProductsById',
 	// 新增商品
 	insertProducts: root + 'products/insertProducts',
+	// 修改商品
+	updateProducts: root +  'products/updateProducts',
 	// 新增库存
 	insertProductsStocks: root + 'products/insertProductsStocks',
+	// 修改库存
+	updateProductsStock: root + 'products/updateProductsStock',
+	// 查询订单list
+	listOrderPagingByShopsId: root + 'order/listOrderPagingByShopsId',
+	// 修改订单状态 发货
+	updateOrderStatus: root + 'order/updateOrderStatus',
+	// 获取订单详情
+	getOrderDetailById: root + 'order/getOrderDetailById',
 })

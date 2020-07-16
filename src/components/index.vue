@@ -33,7 +33,14 @@
 			</el-aside>
 		  <el-container>
 		    <el-header>
-					<div class="rowEndCenter header-con">欢迎您，管理者</div>
+					<div class="rowEndCenter header-con">
+						<el-dropdown @command="handleCommand">
+							<span>欢迎您，{{this.$store.state.userDetail.nickName}}</span>
+							<el-dropdown-menu slot="dropdown">
+								<el-dropdown-item command="a">退出登录</el-dropdown-item>
+							</el-dropdown-menu>
+						</el-dropdown>
+					</div>
 				</el-header>
 		    <el-main>
 					<router-view/>
@@ -52,12 +59,21 @@ export default {
     }
   },
 	created() {
-		this.getMenuList();
+		this.getUserDetail();
 	},
 	methods: {
+		getUserDetail(){
+			if(localStorage.getItem("userDetail")){
+				var userDetail=JSON.parse(localStorage.getItem("userDetail"));
+				this.$store.commit("setUserDetail",userDetail);
+				this.getMenuList();
+			}else{
+				this.$router.push("/")
+			}
+		},
 		// 获取菜单列表
 		getMenuList() {
-			let apiurl = this.api.listMenuByRoleId+'/1';
+			let apiurl = this.api.listMenuByRoleId+'/'+this.$store.state.userDetail.roleId;
 			this.common.getAxios(apiurl, this.returnMenuList);
 		},
 		returnMenuList(res) {
@@ -69,6 +85,22 @@ export default {
 		},
 		goPath(path) {
 			this.$router.push(path)
+		},
+		// 退出登录
+		handleCommand(command) {
+			let _this = this;
+			let apiurl = this.api.logout;
+			this.common.postAxios(apiurl, {}, returnLogout);
+			function returnLogout(res) {
+				if(res.data.status) {
+					localStorage.clear();
+					var userDetail = {};
+					_this.$store.commit("setUserDetail",userDetail);
+					_this.$router.push("/");
+				} else {
+					_this.$message.error(res.data.msg);
+				}
+			}
 		}
 	}
 }

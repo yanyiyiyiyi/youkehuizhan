@@ -75,7 +75,7 @@
 				},
 				formLabelWidth: '80px',
 				dialogFormVisible: false, //false
-				shopsId: 1,
+				shopsId: this.$store.state.userDetail.shops,
 			}
 		},
 		mounted() {

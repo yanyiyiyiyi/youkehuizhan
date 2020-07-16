@@ -2,7 +2,7 @@
 	<div class="main">
 		<div class="bread-crumbs columnCenterStart">
 			<el-breadcrumb separator-class="el-icon-arrow-right">
-			  <el-breadcrumb-item>商品管理/商品详情</el-breadcrumb-item>
+				<el-breadcrumb-item :to="{ path: 'drugAdmin' }">商品管理</el-breadcrumb-item>
 			</el-breadcrumb>
 			<div class="now-position">所在位置：商品详情</div>
 		</div>
@@ -104,7 +104,7 @@
 				descType: '',
 				goodsDescForm: {
 					productsNo:"",
-					shopsId:1,
+					shopsId:this.$store.state.userDetail.shops,
 					productsName:"",
 					introduction:"",
 					// majorPicture:"",
@@ -274,13 +274,13 @@
 			},
 			// 新增属性选项（属性值）
 			addOption(listIndex) {
+				console.log(999)
 				let obj = {optionName: ""}
 				this.attributeRelOptionsVOS[listIndex].optionsList.push(obj);
-				console.log(this.attributeRelOptionsVOS)
+				this.$forceUpdate();//由于编辑的时候会有问题，强制刷新  
 			},
 			// 保存基本
 			saveBase() {
-				let apiurl = this.api.insertProducts;
 				let attributeRelOptionsVOS = this.attributeRelOptionsVOS;
 				let products = this.goodsDescForm;
 				let productsResources = this.productsResources;
@@ -292,8 +292,15 @@
 					products: products,
 					productsResources: productsResources
 				}
-				this.common.postAxios(apiurl, productsVO, this.returnSaveBase);
-				console.log(productsVO);
+				if(this.descType == 'add') {
+					let apiurl = this.api.insertProducts;	
+					this.common.postAxios(apiurl, productsVO, this.returnSaveBase);
+					console.log(productsVO);
+				} else if(this.descType == 'edit'){
+					productsVO.products.id = this.productsId;
+					let apiurl = this.api.updateProducts;	
+					this.common.putAxios(apiurl, productsVO, this.returnSaveBaseUpdate);
+				}
 			},
 			returnSaveBase(res) {
 				if(res.data.status) {
@@ -303,6 +310,18 @@
 					});
 					this.productsId = res.data.data.productsId;
 					this.descType = 'edit';
+					this.getDesc();
+				} else {
+					thid.$message.error(res.data.msg);
+				}
+			},
+			returnSaveBaseUpdate(res) {
+				if(res.data.status) {
+					this.$message({
+						type: 'success',
+						message: '修改成功'
+					});
+					this.productsId = res.data.data.productsId;
 					this.getDesc();
 				} else {
 					thid.$message.error(res.data.msg);
@@ -337,12 +356,17 @@
 					for(var i in this.listVos) {
 						delete this.listVos[i].attributeRelOptionsVOS;
 					}
-					let apiurl = this.api.insertProductsStocks;
 					let data = {
 						listVos: this.listVos
 					}
 					console.log('data', data)
-					this.common.postAxios(apiurl, data, this.returnSaveStock)
+					if(this.descType == 'add') {
+						let apiurl = this.api.insertProductsStocks;
+						this.common.postAxios(apiurl, data, this.returnSaveStock)
+					} else if(this.descType == 'edit'){
+						let apiurl = this.api.updateProductsStock;
+						this.common.putAxios(apiurl, data, this.returnSaveStockUpdate)
+					}
 				}
 			},
 			returnSaveStock(res) {
@@ -352,7 +376,16 @@
 				} else {
 					this.$message.error(res.data.msg);
 				}
+			},
+			returnSaveStockUpdate(res) {
+				if(res.data.status) {
+					this.$message.success('库存修改成功');
+					this.$router.go(-1);//返回上一层
+				} else {
+					this.$message.error(res.data.msg);
+				}
 			}
+			
 		}
 	}
 </script>

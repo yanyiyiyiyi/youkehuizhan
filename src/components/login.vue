@@ -3,8 +3,8 @@
 		<div class="login-form">
 			<div class="login-form-area">
 				<p class="login-form-title">优客会展后台管理平台</p>
-				<el-input class='login-input' prefix-icon="el-icon-user" placeholder="用户名"></el-input>
-				<el-input class='login-input' prefix-icon="el-icon-key" placeholder="密码"></el-input>
+				<el-input class='login-input' prefix-icon="el-icon-user" placeholder="用户名" v-model="form.username"></el-input>
+				<el-input show-password class='login-input' prefix-icon="el-icon-key" placeholder="密码" v-model="form.password"></el-input>
 				
 				<div class="rowCenterCenter">
 					<el-button type="primary" class="login-btn" size="medium" @click="goIndex">登录</el-button>
@@ -20,14 +20,25 @@ export default {
   data () {
     return {
       form: {
-				userName: '',
+				username: '',
 				password: ''
 			}
     }
   },
 	methods: {
 		goIndex() {
-			this.$router.push('index')
+			let apiurl = this.api.login;
+			let login = this.form;
+			this.common.postAxios(apiurl, login, this.returnLogin);
+		},
+		returnLogin(res) {
+			if(res.data.status) {
+				this.$store.commit("setUserDetail",res.data.data);
+				localStorage.setItem("userDetail", JSON.stringify(res.data.data));
+				this.$router.push('index')
+			} else {
+				this.$message.error(res.data.msg);
+			}
 		}
 	}
 }

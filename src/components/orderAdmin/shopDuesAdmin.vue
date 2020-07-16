@@ -99,6 +99,7 @@
 				},
 				formLabelWidth: '80px',
 				dialogFormVisible: false, //false
+				shopsId: this.$store.state.userDetail.shops
 			}
 		},
 		mounted() {
@@ -116,7 +117,7 @@
 			},
 			// 获取table信息
 			getTable() {
-				let apiurl = this.api.listShopsFeeOrderpangingByShopsId + '?page=' + this.page + '&length=' + this.length;
+				let apiurl = this.api.listShopsFeeOrderpangingByShopsId + '?page=' + this.page + '&length=' + this.length+'&shopsId='+this.shopsId;
 				// if(this.searchForm.nickName != '') {
 				// 	apiurl += '&nickName=' + this.searchForm.nickName;
 				// }
